@@ -1,0 +1,71 @@
+{
+    "requirements": [
+        {
+            "name": "10updocker",
+            "type": "app",
+            "version": "10updocker --version",
+            "min": 3,
+            "depends_on" : ""
+        },
+        {
+            "name": "docker",
+            "type": "app",
+            "version": "docker -v",
+            "min": 20
+        },
+        {
+            "name": "php",
+            "type": "app",
+            "version": "php --version",
+            "min": 7
+        },
+        {
+            "name": "git",
+            "type": "app",
+            "version": "git --version",
+            "min": 2.0
+        },
+        {
+            "name": "vagrant",
+            "type": "app",
+            "version": "vagrant -v",
+            "min": 2.0
+        },
+        {
+            "name": "node",
+            "type": "app",
+            "version": "node -v",
+            "min": 12.0
+        },
+        {
+            "name": "svn",
+            "type": "app",
+            "version": "svn --version",
+            "min": 1.0
+        },
+        {
+            "name": "gh",
+            "type": "app",
+            "version": "gh --version",
+            "min": 1.0
+        },
+        {
+            "name": "blah",
+            "type": "app",
+            "version": "blah --version",
+            "min": 1.0
+        },
+        {
+            "name": "composer",
+            "type": "app",
+            "version": "composer --version",
+            "min": 1.0
+        },
+        {
+            "name": "docker-compose",
+            "type": "app",
+            "version": "docker-compose -v",
+            "min": 1.29
+        }
+    ]
+}

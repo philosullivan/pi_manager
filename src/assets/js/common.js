@@ -9,10 +9,14 @@ const ls              = require( 'local-storage' );
 
 // Get app info from main process.
 const app_info = ipcRenderer.sendSync('app_info');
-console.log( app_info );
+const app_path      = app_info.app_path;
+const app_name      = app_info.app_name;
+const app_data      = app_info.app_data;
+
+const config_object = JSON.parse( fs.readFileSync( `${app_data}/data.json`, 'utf8' ) );
+const requirements  = config_object.requirements;
 
 // Variables //
-var settings          = null;
 var intViewportWidth  = window.innerWidth;
 var intViewportHeight = window.innerHeight;
 
@@ -33,13 +37,6 @@ ipcRenderer.on( 'error', function (event, data) {
   console.error( data );
   alert( data );
 });
-
-// Open Chrome Dev Tools.
-/*
-$(document).on( 'click', '#btn_mnu_devtools', function () {
-  ipcRenderer.sendSync('open_dev_tools');
-});
-*/
 
 // Exit application.
 $(document).on( 'click', '#btn_mnu_exit', function () {
@@ -107,6 +104,20 @@ const add_event_handlers = () => {
   $( document ).on( 'click', '#btn_main_menu', function () {
     $( '#main_menu' ).foundation( 'open' );
   });
+
+  $( document ).on( 'click', '.mnu', function () {
+    $( '#main_menu' ).foundation( 'close' );
+  });
   
 
 }
+
+// .
+const exit_app = () => {
+  let result  = window.confirm( 'Are you sure you want to exit?' );
+  let message = result ? 'YES' : 'NO';
+  if ( message === 'YES' ) {
+    ipcRenderer.sendSync( 'exit' );
+  }
+}
+

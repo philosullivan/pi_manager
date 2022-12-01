@@ -50,3 +50,10 @@ hr {
     background-color: #BB2525;
     color: white;
 }
+
+#btn_exit {
+    position: absolute;
+    right:    0;
+    bottom:   0;
+    width: 100%
+}

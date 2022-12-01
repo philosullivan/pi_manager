@@ -1,16 +1,12 @@
 module.exports = {
   packagerConfig: {
-    icon: '/assets/img/pi.png'
+    icon: 'assets/img/pi.png'
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-deb',
-      config: {
-        options: {
-          icon: '/assets/img/pi.png'
-        }
-      },
+      config: {},
     }
   ],
 };
