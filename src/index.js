@@ -9,8 +9,8 @@ const os                = require( 'os' );
 const windowStateKeeper = require( 'electron-window-state' );
 const fs                = require( 'fs-extra' );
 const is_dev            = require( 'electron-is-dev' );
-const exec              = require('shelljs').exec;
-
+const exec              = require( 'shelljs' ).exec;
+const trim              = require( '@stdlib/string-trim' );
 const user_home_dir     = os.homedir();
 const app_path          = app.getAppPath();
 const app_name          = app.getName();
@@ -29,7 +29,6 @@ if ( is_dev ) {
 
 // .
 const createWindow = () => {
-
   let mainWindowState = windowStateKeeper({
     defaultWidth: 1000,
     defaultHeight: 800
@@ -100,6 +99,7 @@ ipcMain.on( 'exit', function ( event, arg ) {
   event.returnValue = app.quit();
 });
 
+// .
 ipcMain.on( 'app_info', function ( event, arg ) {
   event.returnValue = { 
     user_home_dir:   `${user_home_dir}`, 
@@ -111,13 +111,44 @@ ipcMain.on( 'app_info', function ( event, arg ) {
 
 // Run shell commands and get the return.
 ipcMain.on('run_cmd', function (event, arg) {
-  console.log( 'run_cmd' );
-  console.log( `${arg[0]}` );
+
   exec(`${arg[0]}`, {silent:true}, function (code, stdout, stderr) {
-    console.log( `CODE: ${code}` );
-    console.log( `STDOUT: ${stdout}` );
-    console.log( `STDERR: ${stderr}` );
-    console.log( '===============' );
+    // .
+    if ( is_dev ) {
+      console.log( 'run_cmd' );
+      console.log( `${arg[0]}` );
+      console.log( `CODE: ${code}` );
+      console.log( `STDOUT: ${stdout}` );
+      console.log( `STDERR: ${stderr}` );
+      console.log( '===============' );
+    }
     event.returnValue = { 'code': code, 'stdout': stdout, 'stderr': stderr };
   });
+});
+
+// .
+ipcMain.on( 'cpu_info', function ( event, arg ) {
+  let cpu_info   = '/proc/cpuinfo';
+  let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
+  let cpu_object = {};
+
+  // console.log( cpu_data );
+
+
+    cpu_data.split(/\r?\n/).forEach( line =>  {
+      // No empty lines.
+      if ( line ) {
+        let entry = line.split(':');
+        let key   = trim( entry[0] );
+        let value = trim( entry[1] );
+  
+        if ( key && value ) {
+          cpu_object[key] = value;
+        }
+      }
+    });
+
+
+  // console.log( cpu_object );
+  event.returnValue = cpu_object;
 });
