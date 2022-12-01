@@ -6,18 +6,10 @@ const fs              = require( 'fs-extra' );
 const os              = require( 'os' );
 const ls              = require( 'local-storage' );
 
-// .
-shelljs.config.execPath = shelljs.which('node').toString();
 
-// Get app info from main process.
-const app_info = ipcRenderer.sendSync('app_info');
+const user_home_dir   = os.homedir();
 
 // Variables //
-const user_home_dir   = os.homedir();
-const app_path        = app_info.app_path;
-const app_name        = app_info.app_name;
-const log_path        = app_info.log_path;
-const settings_path   = app_info.settings_path;
 var settings          = null;
 var intViewportWidth  = window.innerWidth;
 var intViewportHeight = window.innerHeight;
