@@ -64,7 +64,7 @@ const custom_error = (msg) => {
   alert( msg );
 }
 
-// .
+// Shows the loading spinner.
 const loader_show = (element = 'content') => {
 $.LoadingOverlay('show', {
   image: "",
@@ -75,9 +75,9 @@ $.LoadingOverlay('show', {
 });
 }
 
-// .
+// Hide the loading spinner.
 const loader_hide = (element = 'content') => {
-$.LoadingOverlay('hide', true);
+  $.LoadingOverlay('hide', true);
 }
 
 /**
