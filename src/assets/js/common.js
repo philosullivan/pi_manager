@@ -113,13 +113,28 @@ const exit_app = () => {
 const check_requirements = () => {
 
   for (const [ key, value ] of Object.entries( requirements ) ) {
-    console.log( `KEY: ${key} || VALUE: ${value.name}` );
+    // console.log( `KEY: ${key} || VALUE: ${value.name}` );
 
-    let result = run_shell( `which ${value.name}` );
+    let app_name        = `${value.name}`;
+    let app_get_version = `${value.version}`;
+    
 
-    console.log( result );
+    // console.log( `app_name: ${app_name}` );
+    // console.log( `app_get_version: ${app_get_version}` );
 
+    // .
+    let exists = run_shell( `which ${value.name}` );
+
+    // 0 = exists.
+    let app_code = exists.code;
+    if ( app_code === 0 ) {
+      console.log( `${app_name} Exists` );
+    }
   }
-
 }
 
+//.
+const get_hardware_info = () => {
+  let cpu_info = ipcRenderer.sendSync( 'cpu_info' );
+  console.log( JSON.stringify( cpu_info ) );
+}

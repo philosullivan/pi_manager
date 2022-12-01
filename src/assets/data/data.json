@@ -50,10 +50,10 @@
             "min": 1.0
         },
         {
-            "name": "blah",
+            "name": "gpio",
             "type": "app",
-            "version": "blah --version",
-            "min": 1.0
+            "version": "gpio -v",
+            "min": 2.52
         },
         {
             "name": "composer",
@@ -66,6 +66,18 @@
             "type": "app",
             "version": "docker-compose -v",
             "min": 1.29
+        },
+        {
+            "name": "nvm",
+            "type": "app",
+            "version": "nvm -v",
+            "min": 0.38
+        },
+        {
+            "name": "8relind",
+            "type": "app",
+            "version": "8relind -v",
+            "min": 0.38
         }
     ]
 }

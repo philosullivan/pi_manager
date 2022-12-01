@@ -18,6 +18,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@stdlib/string-trim": "^0.0.9",
     "electron-is-dev": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-state": "^5.0.3",

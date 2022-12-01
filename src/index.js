@@ -133,17 +133,24 @@ ipcMain.on( 'cpu_info', function ( event, arg ) {
   let cpu_object = {};
 
   // console.log( cpu_data );
-
-
     cpu_data.split(/\r?\n/).forEach( line =>  {
       // No empty lines.
       if ( line ) {
         let entry = line.split(':');
         let key   = trim( entry[0] );
         let value = trim( entry[1] );
+        let processor_number;
   
         if ( key && value ) {
-          cpu_object[key] = value;
+
+          if ( key === 'processor' ) {
+            processor_number = value;
+          }
+
+          console.log(processor_number);
+
+          cpu_object[`${key}_${processor_number}`] = value;
+
         }
       }
     });

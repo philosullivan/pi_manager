@@ -1,0 +1,13 @@
+Here is how to read the current state of the I2C port:
+    sudo raspi-config nonint get_i2c
+This command will return:
+    1 if the port is disabled
+    0 if the port is enabled
+
+
+Here is how to enable the I2C port:
+    sudo raspi-config nonint do_i2c 0
+Again, note that 0 means true / on here!
+Here is how to disable the I2C port:
+    sudo raspi-config nonint do_i2c 1
+1 means “false” or off for this purpose.
