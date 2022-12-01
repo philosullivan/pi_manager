@@ -114,6 +114,11 @@ const check_requirements = () => {
 
   for (const [ key, value ] of Object.entries( requirements ) ) {
     console.log( `KEY: ${key} || VALUE: ${value.name}` );
+
+    let result = run_shell( `which ${value.name}` );
+
+    console.log( result );
+
   }
 
 }
