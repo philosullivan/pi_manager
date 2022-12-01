@@ -1,8 +1,8 @@
 {
-  "name": "my-app",
-  "productName": "my-app",
+  "name": "pi_manager",
+  "productName": "pi_manager",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "GUI app for managing Raspberry PI",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -20,6 +20,7 @@
   "dependencies": {
     "electron-is-dev": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-window-state": "^5.0.3",
     "fs-extra": "^11.1.0",
     "local-storage": "^2.0.0",
     "shelljs": "^0.8.5"
