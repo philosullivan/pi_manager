@@ -1,5 +1,52 @@
-html, body {
+html,
+body {
     height: 100%;
     padding: 0;
     margin: 0;
+}
+
+.bdc-red {
+    background-color: #BB2525;
+    color: white;
+}
+
+.text-bdc {
+    color: #BB2525;
+}
+
+.off-canvas-content {
+    margin: 1em;
+    min-height: 10em;
+}
+
+#content {
+    min-height: 15em;
+}
+
+.mnu {
+    text-indent: 1em;
+    text-align: left;
+}
+
+hr {
+    width: 100%;
+}
+
+
+.off-canvas {
+    background-color: white;
+}
+
+.title-bar {
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+.sub-title-bar {
+    padding-left: .5em;
+    padding-right: .5em;
+    min-height: 4em;
+    margin-bottom: .1em;
+    background-color: #BB2525;
+    color: white;
 }

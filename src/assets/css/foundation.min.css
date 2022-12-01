@@ -4675,16 +4675,14 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
 .has-tip {
   position: relative;
   display: inline-block;
-  border-bottom: dotted 1px #8a8a8a;
   font-weight: 700;
-  cursor: help
 }
 
 .tooltip {
   position: absolute;
   top: calc(100% + .6495rem);
   z-index: 1200;
-  max-width: 10rem;
+  max-width: 15rem;
   padding: .75rem;
   border-radius: 3px;
   background-color: #0a0a0a;

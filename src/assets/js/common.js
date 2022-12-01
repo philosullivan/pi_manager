@@ -7,26 +7,25 @@ const os              = require( 'os' );
 const ls              = require( 'local-storage' );
 
 
-const user_home_dir   = os.homedir();
+// Get app info from main process.
+const app_info = ipcRenderer.sendSync('app_info');
+console.log( app_info );
 
 // Variables //
 var settings          = null;
 var intViewportWidth  = window.innerWidth;
 var intViewportHeight = window.innerHeight;
 
-
 // On load.
 document.addEventListener( 'DOMContentLoaded', ( event ) => {
   $(document).foundation();
-
   // Debug.
   intViewportWidth  = window.innerWidth;
   intViewportHeight = window.innerHeight;
   $('#size').html(`Width: ${intViewportWidth} || Height: ${intViewportHeight}`);
-
-
+  // .
+  add_event_handlers();
 });
-
 
 // Generic return from back end functions.
 // TODO make this extensable.
@@ -35,17 +34,17 @@ ipcRenderer.on( 'error', function (event, data) {
   alert( data );
 });
 
-
 // Open Chrome Dev Tools.
+/*
 $(document).on( 'click', '#btn_mnu_devtools', function () {
   ipcRenderer.sendSync('open_dev_tools');
 });
+*/
 
 // Exit application.
 $(document).on( 'click', '#btn_mnu_exit', function () {
   ipcRenderer.sendSync('exit');
 });
-
 
 // Resize events, mostly for debug.
 $(window).on('resize', function (e) {
@@ -98,4 +97,16 @@ const log = (msg, type = 'info') => {
 // Run shell commands in the main thread.
 const run_shell = ( cmd ) => {
   return ipcRenderer.sendSync( 'run_cmd', [ cmd ] );
+}
+
+
+// .
+const add_event_handlers = () => {
+  // .
+  
+  $( document ).on( 'click', '#btn_main_menu', function () {
+    $( '#main_menu' ).foundation( 'open' );
+  });
+  
+
 }
