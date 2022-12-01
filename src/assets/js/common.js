@@ -80,22 +80,10 @@ const loader_hide = (element = 'content') => {
   $.LoadingOverlay('hide', true);
 }
 
-/**
- * Add entries into the log file.
- *
- * @param {string} msg Messege content to add to the log file.
- * @param {string} type The level to log at ( info, warn, error, etc ).
- * @returns nothing
-const log = (msg, type = 'info') => {
-  ipcRenderer.send('log', [msg, type]);
-}
-*/
-
 // Run shell commands in the main thread.
 const run_shell = ( cmd ) => {
   return ipcRenderer.sendSync( 'run_cmd', [ cmd ] );
 }
-
 
 // .
 const add_event_handlers = () => {
@@ -119,5 +107,14 @@ const exit_app = () => {
   if ( message === 'YES' ) {
     ipcRenderer.sendSync( 'exit' );
   }
+}
+
+//.
+const check_requirements = () => {
+
+  for (const [ key, value ] of Object.entries( requirements ) ) {
+    console.log( `KEY: ${key} || VALUE: ${value.name}` );
+  }
+
 }
 
