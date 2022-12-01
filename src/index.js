@@ -1,7 +1,8 @@
 const { 
   app, 
   BrowserWindow,
-  ipcMain
+  ipcMain,
+  nativeImage
 }                       = require( 'electron' );
 const path              = require( 'path' );
 const os                = require( 'os' );
@@ -14,6 +15,8 @@ const user_home_dir     = os.homedir();
 const app_path          = app.getAppPath();
 const app_name          = app.getName();
 const assets_dir        = path.join( __dirname, 'assets' );
+const icon_dock         = `${assets_dir}/img/pi.png`;
+const icon_app          = nativeImage.createFromPath( icon_dock );
 const template_index    = `${assets_dir}/templates/index.html`;
 
 let mainWindow          = null;
@@ -45,6 +48,7 @@ const createWindow = () => {
       enableRemoteModule: true,
       preload: `${assets_dir}/modules/preload.js`,
     },
+    icon: icon_app
   });
 
   // .
