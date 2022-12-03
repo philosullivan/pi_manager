@@ -80,12 +80,22 @@ app.on('activate', () => {
 });
 
 // ===================================================== //
+
+// Send to render process.
+const send_to_render = ( channel, msg ) => {
+  mainWindow.webContents.send( channel, msg );
+}
+
 // .
-process.on('uncaughtException', function (error) {
-  console.log( error );
-  if ( is_dev ) {
-      mainWindow.webContents.openDevTools();
-  }
+process.on('uncaughtException', function ( error ) {
+  //mainWindow.webContents.on('did-finish-load', ()=>{
+    // mainWindow.webContents.send( 'error', error );
+  //});
+  // console.log( error );
+  // mainWindow.webContents.send( 'error', [ error ] ) ;
+  //if ( is_dev ) {
+     // mainWindow.webContents.openDevTools();
+  //}
 });
 
 // Open Chrome Dev Tools.
@@ -111,8 +121,7 @@ ipcMain.on( 'app_info', function ( event, arg ) {
 
 // Run shell commands and get the return.
 ipcMain.on('run_cmd', function (event, arg) {
-
-  exec(`${arg[0]}`, {silent:true}, function (code, stdout, stderr) {
+  exec(`${arg[0]}`, { silent:true} , function ( code, stdout, stderr ) {
     // .
     if ( is_dev ) {
       console.log( 'run_cmd' );
@@ -132,30 +141,58 @@ ipcMain.on( 'cpu_info', function ( event, arg ) {
   let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
   let cpu_object = {};
 
-  // console.log( cpu_data );
-    cpu_data.split(/\r?\n/).forEach( line =>  {
-      // No empty lines.
-      if ( line ) {
+  try {
+     // console.log( cpu_data );
+     cpu_data.split(/\r?\n/).forEach( line =>  {
+      let proc_numb;
+
+      if ( trim( line ) ) { 
+        //console.log( 'has line' );
+
         let entry = line.split(':');
         let key   = trim( entry[0] );
         let value = trim( entry[1] );
-        let processor_number;
+        let section;
+
+        if ( key === 'processor' ) {
+          proc_numb = value;
+          section   = key + '_' + proc_numb;
+          console.log( section );
+          cpu_object[section]  = {};
+        }
+
+         cpu_object[section] = { key : value };
+        
+      } else {
+        proc_numb = null;
+        // new secion of the file.
+        console.log( 'has NO line' );
+        cpu_object = { key : value };
+      }
+
+      // No empty lines.
+      /*
+      if ( trim( line ) ) {
+        let entry = line.split(':');
+        let key   = trim( entry[0] );
+        let value = trim( entry[1] );
+        var processor_number;
   
         if ( key && value ) {
-
+          
           if ( key === 'processor' ) {
             processor_number = value;
+            console.log( key + '_' + processor_number );
           }
-
-          console.log(processor_number);
-
-          cpu_object[`${key}_${processor_number}`] = value;
-
+          cpu_object[key]  = value;
         }
       }
+      */
     });
-
-
-  // console.log( cpu_object );
-  event.returnValue = cpu_object;
+  } catch( err)  {
+    // Return error to the render process.
+    send_to_render( 'error', err );
+  } finally {
+    event.returnValue = cpu_object;
+  }
 });

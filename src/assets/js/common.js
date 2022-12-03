@@ -23,18 +23,20 @@ var intViewportHeight = window.innerHeight;
 // On load.
 document.addEventListener( 'DOMContentLoaded', ( event ) => {
   $(document).foundation();
+
   // Debug.
   intViewportWidth  = window.innerWidth;
   intViewportHeight = window.innerHeight;
   $('#size').html(`Width: ${intViewportWidth} || Height: ${intViewportHeight}`);
+  
   // .
   add_event_handlers();
 });
 
 // Generic return from back end functions.
 // TODO make this extensable.
-ipcRenderer.on( 'error', function (event, data) {
-  console.error( data );
+ipcRenderer.on( 'error', function ( event, data ) {
+  // console.log( data );
   alert( data );
 });
 
