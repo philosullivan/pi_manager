@@ -18,6 +18,7 @@ const assets_dir        = path.join( __dirname, 'assets' );
 const app_data          = `${assets_dir}/data`;
 const icon_dock         = `${assets_dir}/img/pi.png`;
 const icon_app          = nativeImage.createFromPath( icon_dock );
+const partials_dir      = `${assets_dir}/templates`;
 const template_index    = `${assets_dir}/templates/index.html`;
 
 let mainWindow          = null;
@@ -115,7 +116,8 @@ ipcMain.on( 'app_info', function ( event, arg ) {
     user_home_dir:   `${user_home_dir}`, 
     app_path:        `${app_path}`, 
     app_name:        `${app_name}`,
-    app_data:        `${app_data}`
+    app_data:        `${app_data}`,
+    partials_dir:    `${partials_dir}`
   }
 });
 

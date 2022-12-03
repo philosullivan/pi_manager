@@ -8,10 +8,11 @@ const ls              = require( 'local-storage' );
 
 
 // Get app info from main process.
-const app_info = ipcRenderer.sendSync('app_info');
+const app_info      = ipcRenderer.sendSync('app_info');
 const app_path      = app_info.app_path;
 const app_name      = app_info.app_name;
 const app_data      = app_info.app_data;
+const partials_dir  = app_info.partials_dir;
 
 const config_object = JSON.parse( fs.readFileSync( `${app_data}/data.json`, 'utf8' ) );
 const requirements  = config_object.requirements;
@@ -19,6 +20,7 @@ const requirements  = config_object.requirements;
 // Variables //
 var intViewportWidth  = window.innerWidth;
 var intViewportHeight = window.innerHeight;
+var current_template;
 
 // On load.
 document.addEventListener( 'DOMContentLoaded', ( event ) => {
@@ -97,6 +99,11 @@ const add_event_handlers = () => {
     $( '#main_menu' ).foundation( 'close' );
   });
   
+  // .
+  $( document ).on( 'click', '.load_template', function () {
+    let template = $(this).data( 'template' );
+    load_template( template );
+  });
 
 }
 
@@ -138,3 +145,31 @@ const get_hardware_info = () => {
   let cpu_info = ipcRenderer.sendSync( 'cpu_info' );
   console.log( JSON.stringify( cpu_info ) );
 }
+
+// .
+const load_template = async ( template_name ) => {
+  let template    = `${partials_dir}/${template_name}.html`;
+
+  // .
+  if (  current_template === `${template_name}.html` ) {
+    return;
+  }
+
+  // .
+  loader_show();
+
+  // .
+  setTimeout(() => {
+    $( "#content" ).load( `${template}`, function( response, status, xhr ) {
+      if ( status == "error" ) {
+        var msg = "Sorry but there was an error: ";
+        alert( status );
+      }
+      current_template = `${template_name}.html`;
+      ls.set( 'current_template', template_name );
+      $( document ).foundation();
+      loader_hide();
+    });
+  }, '750' );
+
+};
