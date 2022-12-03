@@ -28,7 +28,7 @@ document.addEventListener( 'DOMContentLoaded', ( event ) => {
   intViewportWidth  = window.innerWidth;
   intViewportHeight = window.innerHeight;
   $('#size').html(`Width: ${intViewportWidth} || Height: ${intViewportHeight}`);
-  
+
   // .
   add_event_handlers();
 });
@@ -36,8 +36,7 @@ document.addEventListener( 'DOMContentLoaded', ( event ) => {
 // Generic return from back end functions.
 // TODO make this extensable.
 ipcRenderer.on( 'error', function ( event, data ) {
-  // console.log( data );
-  alert( data );
+  display_error( data );
 });
 
 // Exit application.
@@ -55,15 +54,14 @@ $(window).on('resize', function (e) {
 // Try and report all unhandled exceptions.
 window.onerror = function (msg, url, line) {
   let exception_error = ` MSG: ${msg} URL: ${url} Line: ${line}`;
-  custom_error(`${exception_error}`);
+  display_error(`${exception_error}`);
   return true;
 };
 
 // .
-const custom_error = (msg) => {
-  // $('#err_msg').html(`${msg}`);
-  // $('#dlg-error').foundation('open');
-  alert( msg );
+const display_error = ( msg ) => {
+  $( '#dlg_error_msg' ).html( `${msg}` );
+  $( '#dlg_error' ).foundation( 'open') ;
 }
 
 // Shows the loading spinner.

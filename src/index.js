@@ -91,7 +91,7 @@ process.on('uncaughtException', function ( error ) {
   //mainWindow.webContents.on('did-finish-load', ()=>{
     // mainWindow.webContents.send( 'error', error );
   //});
-  // console.log( error );
+  console.log( error );
   // mainWindow.webContents.send( 'error', [ error ] ) ;
   //if ( is_dev ) {
      // mainWindow.webContents.openDevTools();
@@ -193,6 +193,7 @@ ipcMain.on( 'cpu_info', function ( event, arg ) {
     // Return error to the render process.
     send_to_render( 'error', err );
   } finally {
+    // .
     event.returnValue = cpu_object;
   }
 });
