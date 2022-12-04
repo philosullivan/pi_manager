@@ -141,7 +141,7 @@ ipcMain.on('run_cmd', function (event, arg) {
 ipcMain.on( 'cpu_info', function ( event, arg ) {
   let cpu_info   = '/proc/cpuinfo';
   let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
-  let cpu_object = {};
+  let cpu_object = [];
 
   try {
      // console.log( cpu_data );
@@ -154,24 +154,24 @@ ipcMain.on( 'cpu_info', function ( event, arg ) {
         let entry = line.split(':');
         let key   = trim( entry[0] );
         let value = trim( entry[1] );
-        let section;
 
+        console.log( `key: ${key} | Value: ${value}` );
+      }
+/*
+        let section;
         if ( key === 'processor' ) {
           proc_numb = value;
           section   = key + '_' + proc_numb;
           console.log( section );
           cpu_object[section]  = {};
         }
-
          cpu_object[section] = { key : value };
-        
       } else {
         proc_numb = null;
-        // new secion of the file.
         console.log( 'has NO line' );
         cpu_object = { key : value };
       }
-
+*/
       // No empty lines.
       /*
       if ( trim( line ) ) {

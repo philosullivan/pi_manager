@@ -5,7 +5,7 @@ const path            = require( 'path' );
 const fs              = require( 'fs-extra' );
 const os              = require( 'os' );
 const ls              = require( 'local-storage' );
-
+const trim            = require( '@stdlib/string-trim' );
 
 // Get app info from main process.
 const app_info      = ipcRenderer.sendSync('app_info');
@@ -142,8 +142,32 @@ const check_requirements = () => {
 
 //.
 const get_hardware_info = () => {
-  let cpu_info = ipcRenderer.sendSync( 'cpu_info' );
-  console.log( JSON.stringify( cpu_info ) );
+  // let cpu_info = ipcRenderer.sendSync( 'cpu_info' );
+  // console.log( JSON.stringify( cpu_info ) );
+
+  let cpu_info   = '/proc/cpuinfo';
+  let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
+
+  try {
+    // console.log( cpu_data );
+    cpu_data.split(/\r?\n/).forEach( line =>  {
+     let proc_numb;
+
+     if ( trim( line ) ) { 
+       //console.log( 'has line' );
+
+       let entry = line.split(':');
+       let key   = trim( entry[0] );
+       let value = trim( entry[1] );
+
+       // console.log( `key: ${key} | Value: ${value}` );
+       $( 'table tbody' ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
+     }
+
+    });
+  } catch( err)  {
+    alert(err);
+  }
 }
 
 // .
