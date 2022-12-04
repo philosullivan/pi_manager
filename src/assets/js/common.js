@@ -6,6 +6,7 @@ const fs              = require( 'fs-extra' );
 const os              = require( 'os' );
 const ls              = require( 'local-storage' );
 const trim            = require( '@stdlib/string-trim' );
+const si              = require('systeminformation');
 
 // Get app info from main process.
 const app_info      = ipcRenderer.sendSync('app_info');
