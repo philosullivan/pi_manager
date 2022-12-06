@@ -19,14 +19,10 @@ const config_object = JSON.parse( fs.readFileSync( `${app_data}/data.json`, 'utf
 const requirements  = config_object.requirements;
 
 // Variables //
+var current_template;
 var intViewportWidth  = window.innerWidth;
 var intViewportHeight = window.innerHeight;
-
 $('#size').html(`Width: ${intViewportWidth} || Height: ${intViewportHeight}`);
-
-
-var current_template;
-
 
 // On load.
 document.addEventListener( 'DOMContentLoaded', ( event ) => {
@@ -37,9 +33,16 @@ document.addEventListener( 'DOMContentLoaded', ( event ) => {
   intViewportHeight = window.innerHeight;
   $('#size').html(`Width: ${intViewportWidth} || Height: ${intViewportHeight}`);
 
+  // Global datatables options.
+  $.extend( $.fn.dataTable.defaults, {
+    scrollY: 450,
+    pageLength: 100
+  });
+
   // .
   if ( tabs_exist ) {
     set_tab_height();
+    // set_element_height('.tabs-panel');
   }
 
   // .
@@ -66,6 +69,7 @@ $( window ).on('resize', function (e) {
 
   if ( tabs_exist() ) {
     set_tab_height();
+    // set_element_height('.tabs-panel');
   }
 
 });
@@ -86,6 +90,11 @@ const tabs_exist = () => {
 // .
 const set_tab_height = () => {
   $('.tabs-panel').height( intViewportHeight - 280 );
+}
+
+// .
+const set_element_height = ( el ) => {
+  $( `'${el}'` ).height( intViewportHeight - 280 );
 }
 
 // .
@@ -135,6 +144,24 @@ const add_event_handlers = () => {
 
 }
 
+// Clears all rows from a table .
+const clear_table = (table) => {
+  let the_table = $(`#${table}`).DataTable();
+  let the_row_count = the_table.data().count();
+
+  if (the_table && the_row_count !== 0) {
+    the_table.clear().draw();
+  }
+}
+
+// Adds row to a table.
+const add_row = (table, row) => {
+  if ( table && row ) {
+    let the_table = $(`#${table}`).DataTable();
+    the_table.row.add(row).draw();
+  }
+}
+
 // .
 const exit_app = () => {
   let result  = window.confirm( 'Are you sure you want to exit?' );
@@ -168,36 +195,6 @@ const check_requirements = () => {
   }
 }
 
-//.
-const get_hardware_info = () => {
-  // let cpu_info = ipcRenderer.sendSync( 'cpu_info' );
-  // console.log( JSON.stringify( cpu_info ) );
-
-  let cpu_info   = '/proc/cpuinfo';
-  let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
-
-  try {
-    // console.log( cpu_data );
-    cpu_data.split(/\r?\n/).forEach( line =>  {
-     let proc_numb;
-
-     if ( trim( line ) ) { 
-       //console.log( 'has line' );
-
-       let entry = line.split(':');
-       let key   = trim( entry[0] );
-       let value = trim( entry[1] );
-
-       // console.log( `key: ${key} | Value: ${value}` );
-       $( 'table tbody' ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
-     }
-
-    });
-  } catch( err)  {
-    alert(err);
-  }
-}
-
 // .
 const load_template = async ( template_name ) => {
   let template    = `${partials_dir}/${template_name}.html`;
@@ -224,6 +221,7 @@ const load_template = async ( template_name ) => {
         // .
         if ( tabs_exist ) {
           set_tab_height();
+          // set_element_height('.tabs-panel');
         }
 
       loader_hide();
@@ -256,69 +254,9 @@ const get_pinout = () => {
 const get_system_info = () => {
   let cpu_info   = '/proc/cpuinfo';
   let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
-
-  try {
-    cpu_data.split(/\r?\n/).forEach( line =>  {
-     if ( trim( line ) ) { 
-       let entry = line.split(':');
-       let key   = trim( entry[0] );
-       let value = trim( entry[1] );
-       $( '#tbl-cpuinfo tbody' ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
-     }
-    });
-  } catch( e )  {
-    console.log( e );
-  }
-
-  // CPU Info.
-  try {
-    si.cpu( function( data ) {
-      for (const [ key, value ] of Object.entries( data ) ) {
-        if ( typeof value !== 'object' && value !== null && !Array.isArray( value ) ) {
-          $( "#tbl-si-cpu" ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
-        } else {
-          for (const [ subkey, subvalue ] of Object.entries( value ) ) {
-            $( "#tbl-si-cpu" ).append( `<tr><td>${subkey}</td><td>${subvalue}</td></tr>` );
-          }
-        }
-      }
-    });
-  } catch ( e ) {
-    console.log( e );
-  }
-
-  // System Info.
-  try {
-    si.system( function( data ) {
-      for (const [ key, value ] of Object.entries( data ) ) {
-        if ( typeof value !== 'object' && value !== null && !Array.isArray( value ) ) {
-          $( "#tbl-si-version" ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
-        } else {
-          for (const [ subkey, subvalue ] of Object.entries( value ) ) {
-            $( "#tbl-si-version" ).append( `<tr><td>${subkey}</td><td>${subvalue}</td></tr>` );
-          }
-        }
-      }
-    });
-  } catch ( e ) {
-    console.log( e );
-  }
-
-  // .
-  try {
-    si.chassis( function( data ) {
-      for (const [ key, value ] of Object.entries( data ) ) {
-        if ( typeof value !== 'object' && value !== null && !Array.isArray( value ) ) {
-          $( "#tbl-si-time" ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
-        } else {
-          for (const [ subkey, subvalue ] of Object.entries( value ) ) {
-            $( "#tbl-si-time" ).append( `<tr><td>${subkey}</td><td>${subvalue}</td></tr>` );
-          }
-        }
-      }
-    });
-  } catch ( e ) {
-    console.log( e );
-  }
-
+  $( '#cpu-info' ).append( cpu_data );
+  
+  let pinout      = run_shell( `pinout` );
+  let pinout_data = pinout.stdout;
+  $( '#pinout-info' ).append( pinout_data );
 }
