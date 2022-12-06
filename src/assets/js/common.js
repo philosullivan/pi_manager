@@ -79,14 +79,17 @@ window.onerror = function (msg, url, line) {
 
 // .
 const tabs_exist = () => {
-  const tabs = document.querySelector( 'div' );
-  if ( tabs.classList.contains( 'tabs-panel' ) ) {
+  const tabs = document.getElementsByClassName( 'tabs-panel' );
+/*
+  if ( tabs.length > 0 ) {
     console.log( 'tabs exists' );
     return true;
   } else {
     console.log( 'tabs do NOT exist' );
     return false;
   }
+*/
+  return tabs.length;
 }
 
 // .

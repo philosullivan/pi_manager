@@ -3,6 +3,7 @@ body {
     height: 100%;
     padding: 0;
     margin: 0;
+    background-color: white;
 }
 
 .bdc-red {
@@ -49,6 +50,10 @@ hr {
     margin-bottom: .1em;
     background-color: #BB2525;
     color: white;
+}
+
+.top-bar {
+    margin-bottom: .25em;
 }
 
 #btn_exit {
