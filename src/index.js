@@ -124,7 +124,7 @@ ipcMain.on( 'app_info', function ( event, arg ) {
 // Run shell commands and get the return.
 ipcMain.on('run_cmd', function (event, arg) {
   exec(`${arg[0]}`, { silent:true} , function ( code, stdout, stderr ) {
-    // .
+    /*
     if ( is_dev ) {
       console.log( 'run_cmd' );
       console.log( `${arg[0]}` );
@@ -133,69 +133,7 @@ ipcMain.on('run_cmd', function (event, arg) {
       console.log( `STDERR: ${stderr}` );
       console.log( '===============' );
     }
+    */
     event.returnValue = { 'code': code, 'stdout': stdout, 'stderr': stderr };
   });
-});
-
-// .
-ipcMain.on( 'cpu_info', function ( event, arg ) {
-  let cpu_info   = '/proc/cpuinfo';
-  let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
-  let cpu_object = [];
-
-  try {
-     // console.log( cpu_data );
-     cpu_data.split(/\r?\n/).forEach( line =>  {
-      let proc_numb;
-
-      if ( trim( line ) ) { 
-        //console.log( 'has line' );
-
-        let entry = line.split(':');
-        let key   = trim( entry[0] );
-        let value = trim( entry[1] );
-
-        console.log( `key: ${key} | Value: ${value}` );
-      }
-/*
-        let section;
-        if ( key === 'processor' ) {
-          proc_numb = value;
-          section   = key + '_' + proc_numb;
-          console.log( section );
-          cpu_object[section]  = {};
-        }
-         cpu_object[section] = { key : value };
-      } else {
-        proc_numb = null;
-        console.log( 'has NO line' );
-        cpu_object = { key : value };
-      }
-*/
-      // No empty lines.
-      /*
-      if ( trim( line ) ) {
-        let entry = line.split(':');
-        let key   = trim( entry[0] );
-        let value = trim( entry[1] );
-        var processor_number;
-  
-        if ( key && value ) {
-          
-          if ( key === 'processor' ) {
-            processor_number = value;
-            console.log( key + '_' + processor_number );
-          }
-          cpu_object[key]  = value;
-        }
-      }
-      */
-    });
-  } catch( err)  {
-    // Return error to the render process.
-    send_to_render( 'error', err );
-  } finally {
-    // .
-    event.returnValue = cpu_object;
-  }
 });

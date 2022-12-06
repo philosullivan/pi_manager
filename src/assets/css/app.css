@@ -63,3 +63,7 @@ hr {
     width: 100%
 }
 
+.terminal {
+    background-color: #263238;
+    color: #ffffff;
+}

@@ -34,24 +34,24 @@
 		<ul class="tabs" data-tabs id="example-tabs">
 			<li class="tabs-title is-active"><a href="#panel1" aria-selected="true">CPU Info</a></li>
 			<li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Pinout</a></li>
-			<li class="tabs-title"><a data-tabs-target="panel3" href="#panel3">Tab 3</a></li>
-			<li class="tabs-title"><a data-tabs-target="panel4" href="#panel3">Tab 4</a></li>
+			<li class="tabs-title"><a data-tabs-target="panel3" href="#panel3">Boot</a></li>
+			<li class="tabs-title hide"><a data-tabs-target="panel4" href="#panel4">Tab 4</a></li>
 		</ul>
 
 		<div class="tabs-content" data-tabs-content="example-tabs">
 			<!-- Tab 1 -->
 			<div class="tabs-panel is-active" id="panel1">
-				<textarea id="cpu-info" style="height:100%;"></textarea>
+				<textarea id="cpu-info" class="terminal" style="height:100%;"></textarea>
 			</div>
 
 			<!-- Tab 2 -->
 			<div class="tabs-panel" id="panel2">
-				<textarea id="pinout-info" style="height:100%;"></textarea>
+				<textarea id="pinout-info" class="terminal" style="height:100%;"></textarea>
 			</div>
 
 			<!-- Tab 3 -->
 			<div class="tabs-panel" id="panel3">
-
+				<textarea id="boot-info" class="terminal" style="height:100%;"></textarea>
 			</div>
 
 			<!-- Tab 4 -->

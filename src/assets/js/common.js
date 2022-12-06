@@ -231,32 +231,20 @@ const load_template = async ( template_name ) => {
 };
 
 // .
-const get_pinout = () => {
-  let pinout      = run_shell( `pinout` );
-  let pinout_data = pinout.stdout;
-  // console.log( pinout.stdout );
-  // $('#content').html( pinout.stdout );
-  pinout_data.split(/\r?\n/).forEach( line =>  {
-    console.log( trim(line) );
-    $( "#content" ).append( `<div class="columns small-12">${line}</div>` );
-    /*
-    if ( trim( line ) ) { 
-      let entry = line.split(':');
-      let key   = trim( entry[0] );
-      let value = trim( entry[1] );
-      console.log( `key: ${key} | Value: ${value}` );
-    }
-    */
-  });
-}
-
-// .
 const get_system_info = () => {
-  let cpu_info   = '/proc/cpuinfo';
-  let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
-  $( '#cpu-info' ).append( cpu_data );
+  loader_show();
+    setTimeout(function(){
+      let cpu_info   = '/proc/cpuinfo';
+      let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
+      $( '#cpu-info' ).append( cpu_data );
+      
+      let pinout      = run_shell( `pinout` );
+      let pinout_data = pinout.stdout;
+      $( '#pinout-info' ).append( pinout_data );
   
-  let pinout      = run_shell( `pinout` );
-  let pinout_data = pinout.stdout;
-  $( '#pinout-info' ).append( pinout_data );
+      let boot_info   = '/boot/config.txt';
+      let boot_data   = fs.readFileSync( boot_info, {encoding:'utf8', flag:'r'});
+      $( '#boot-info' ).append( boot_data );
+      loader_hide();
+    }, 750 );
 }
