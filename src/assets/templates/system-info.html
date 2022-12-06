@@ -1,6 +1,6 @@
 <div class="row expanded sub-toolbar align-middle">
 	<div class="columns small-6">
-		<h5><i class="fa-solid fa-gauge-max fa-lg"></i> Dashboard</h5>
+		<h5><i class="fa-sharp fa-solid fa-microchip fa-lg"></i> System Information</h5>
 	</div>
 	<div class="columns small-6">
 		<h5>&nbsp;</h5>
@@ -15,7 +15,7 @@
 			</div>
 			<div class="top-bar-right">
 				<ul class="menu">
-					<li><button type="button" class="button" onclick="get_hardware_info();"><i class="fa-solid fa-bolt fa-lg"></i></button></li>
+					<li><button type="button" class="button" onclick="get_system_info();"><i class="fa-solid fa-bolt fa-lg"></i></button></li>
 				</ul>
 			</div>
 		</div>
@@ -29,14 +29,77 @@
 
 <div class="row expanded collapse">
 	<div class="columns small-12">
-		<table>
-			<thead>
-				<tr>
-					<th>Table Header</th>
-					<th>Table Header</th>
-				</tr>
-			</thead>
-			<tbody></tbody>
-		</table>
+
+		<ul class="tabs" data-tabs id="example-tabs">
+			<li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Tab 1</a></li>
+			<li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Tab 2</a></li>
+			<li class="tabs-title"><a data-tabs-target="panel3" href="#panel3">Tab 3</a></li>
+			<li class="tabs-title"><a data-tabs-target="panel4" href="#panel3">Tab 4</a></li>
+		</ul>
+
+		<div class="tabs-content" data-tabs-content="example-tabs">
+			<!-- Tab 1 -->
+			<div class="tabs-panel is-active" id="panel1">
+				<div class="table-scroll">
+					<table id="tbl-cpuinfo">
+						<thead>
+							<tr>
+								<th>Table Header</th>
+								<th>Table Header</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Tab 2 -->
+			<div class="tabs-panel" id="panel2">
+				<div class="table-scroll">
+					<table id="tbl-si-cpu">
+						<thead>
+							<tr>
+								<th>Table Header</th>
+								<th>Table Header</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Tab 3 -->
+			<div class="tabs-panel" id="panel3">
+				<div class="table-scroll">
+					<table id="tbl-si-version">
+						<thead>
+							<tr>
+								<th>Table Header</th>
+								<th>Table Header</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Tab 4 -->
+			<div class="tabs-panel" id="panel4">
+				<div class="table-scroll">
+					<table id="tbl-si-time">
+						<thead>
+							<tr>
+								<th>Table Header</th>
+								<th>Table Header</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+
+
+		</div>
+
 	</div>
 </div>

@@ -80,15 +80,6 @@ window.onerror = function (msg, url, line) {
 // .
 const tabs_exist = () => {
   const tabs = document.getElementsByClassName( 'tabs-panel' );
-/*
-  if ( tabs.length > 0 ) {
-    console.log( 'tabs exists' );
-    return true;
-  } else {
-    console.log( 'tabs do NOT exist' );
-    return false;
-  }
-*/
   return tabs.length;
 }
 
@@ -259,4 +250,75 @@ const get_pinout = () => {
     }
     */
   });
+}
+
+// .
+const get_system_info = () => {
+  let cpu_info   = '/proc/cpuinfo';
+  let cpu_data   = fs.readFileSync( cpu_info, {encoding:'utf8', flag:'r'});
+
+  try {
+    cpu_data.split(/\r?\n/).forEach( line =>  {
+     if ( trim( line ) ) { 
+       let entry = line.split(':');
+       let key   = trim( entry[0] );
+       let value = trim( entry[1] );
+       $( '#tbl-cpuinfo tbody' ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
+     }
+    });
+  } catch( e )  {
+    console.log( e );
+  }
+
+  // CPU Info.
+  try {
+    si.cpu( function( data ) {
+      for (const [ key, value ] of Object.entries( data ) ) {
+        if ( typeof value !== 'object' && value !== null && !Array.isArray( value ) ) {
+          $( "#tbl-si-cpu" ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
+        } else {
+          for (const [ subkey, subvalue ] of Object.entries( value ) ) {
+            $( "#tbl-si-cpu" ).append( `<tr><td>${subkey}</td><td>${subvalue}</td></tr>` );
+          }
+        }
+      }
+    });
+  } catch ( e ) {
+    console.log( e );
+  }
+
+  // System Info.
+  try {
+    si.system( function( data ) {
+      for (const [ key, value ] of Object.entries( data ) ) {
+        if ( typeof value !== 'object' && value !== null && !Array.isArray( value ) ) {
+          $( "#tbl-si-version" ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
+        } else {
+          for (const [ subkey, subvalue ] of Object.entries( value ) ) {
+            $( "#tbl-si-version" ).append( `<tr><td>${subkey}</td><td>${subvalue}</td></tr>` );
+          }
+        }
+      }
+    });
+  } catch ( e ) {
+    console.log( e );
+  }
+
+  // .
+  try {
+    si.chassis( function( data ) {
+      for (const [ key, value ] of Object.entries( data ) ) {
+        if ( typeof value !== 'object' && value !== null && !Array.isArray( value ) ) {
+          $( "#tbl-si-time" ).append( `<tr><td>${key}</td><td>${value}</td></tr>` );
+        } else {
+          for (const [ subkey, subvalue ] of Object.entries( value ) ) {
+            $( "#tbl-si-time" ).append( `<tr><td>${subkey}</td><td>${subvalue}</td></tr>` );
+          }
+        }
+      }
+    });
+  } catch ( e ) {
+    console.log( e );
+  }
+
 }
