@@ -21,7 +21,12 @@ const requirements  = config_object.requirements;
 // Variables //
 var intViewportWidth  = window.innerWidth;
 var intViewportHeight = window.innerHeight;
+
+$('#size').html(`Width: ${intViewportWidth} || Height: ${intViewportHeight}`);
+
+
 var current_template;
+
 
 // On load.
 document.addEventListener( 'DOMContentLoaded', ( event ) => {
@@ -31,6 +36,11 @@ document.addEventListener( 'DOMContentLoaded', ( event ) => {
   intViewportWidth  = window.innerWidth;
   intViewportHeight = window.innerHeight;
   $('#size').html(`Width: ${intViewportWidth} || Height: ${intViewportHeight}`);
+
+  // .
+  if ( tabs_exist ) {
+    set_tab_height();
+  }
 
   // .
   add_event_handlers();
@@ -48,10 +58,16 @@ $(document).on( 'click', '#btn_mnu_exit', function () {
 });
 
 // Resize events, mostly for debug.
-$(window).on('resize', function (e) {
+$( window ).on('resize', function (e) {
   intViewportWidth  = window.innerWidth;
   intViewportHeight = window.innerHeight;
+
   $('#size').html(`Width: ${intViewportWidth} || Height: ${intViewportHeight}`);
+
+  if ( tabs_exist() ) {
+    set_tab_height();
+  }
+
 });
 
 // Try and report all unhandled exceptions.
@@ -60,6 +76,23 @@ window.onerror = function (msg, url, line) {
   display_error(`${exception_error}`);
   return true;
 };
+
+// .
+const tabs_exist = () => {
+  const tabs = document.querySelector( 'div' );
+  if ( tabs.classList.contains( 'tabs-panel' ) ) {
+    console.log( 'tabs exists' );
+    return true;
+  } else {
+    console.log( 'tabs do NOT exist' );
+    return false;
+  }
+}
+
+// .
+const set_tab_height = () => {
+  $('.tabs-panel').height( intViewportHeight - 280 );
+}
 
 // .
 const display_error = ( msg ) => {
@@ -193,8 +226,34 @@ const load_template = async ( template_name ) => {
       current_template = `${template_name}.html`;
       ls.set( 'current_template', template_name );
       $( document ).foundation();
+
+        // .
+        if ( tabs_exist ) {
+          set_tab_height();
+        }
+
       loader_hide();
     });
   }, '750' );
 
 };
+
+// .
+const get_pinout = () => {
+  let pinout      = run_shell( `pinout` );
+  let pinout_data = pinout.stdout;
+  // console.log( pinout.stdout );
+  // $('#content').html( pinout.stdout );
+  pinout_data.split(/\r?\n/).forEach( line =>  {
+    console.log( trim(line) );
+    $( "#content" ).append( `<div class="columns small-12">${line}</div>` );
+    /*
+    if ( trim( line ) ) { 
+      let entry = line.split(':');
+      let key   = trim( entry[0] );
+      let value = trim( entry[1] );
+      console.log( `key: ${key} | Value: ${value}` );
+    }
+    */
+  });
+}

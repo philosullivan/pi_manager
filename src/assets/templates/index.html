@@ -24,7 +24,7 @@
           <button id="btn_main_menu" type="button" class="button" tabindex="1" title="<i class='fa-light fa-circle-info'></i> Open Main Menu" data-tooltip data-allow-html="true" data-click-open="false" data-position="bottom" data-alignment="left"><i class="fas fa-bars fa-lg"></i></button>
         </div>
         <div class="title-bar-center">
-          <span class="title-bar-title hide"> {Title} </span>
+          <span class="title-bar-title hide"> {<div id="size" class="text-black"></div>} </span>
         </div>
         <div class="title-bar-right">
           <button type="button" class="button" tabindex="2" onclick="ipcRenderer.sendSync('open_dev_tools')" title="<i class='fa-light fa-circle-info'></i> Open Chrome Developer Tools" data-tooltip data-allow-html="true" data-click-open="false" data-position="bottom" data-alignment="right"><i class="fa-solid fa-screwdriver-wrench fa-lg"></i></button>
@@ -44,7 +44,8 @@
         <div class="stacked button-group">
           <a class="button mnu" onclick="check_requirements();">check_requirements</a>
           <a class="button mnu load_template" data-template="system-info">get_hardware_info</a>
-          <a class="button mnu"></a>
+          <a class="button mnu" onclick="get_pinout();">get_pinout</a>
+          <a class="button mnu load_template" data-template="tabs">tabs</a>
           <a class="button mnu"></a>
           <a class="button mnu"></a>
 
