@@ -33,9 +33,9 @@ hr {
     width: 100%;
 }
 
-
 .off-canvas {
-    background-color: white;
+    background-color: #BB2525;
+    color: white;
 }
 
 .title-bar {
@@ -60,7 +60,8 @@ hr {
     position: absolute;
     right:    0;
     bottom:   0;
-    width: 100%
+    width: 100%;
+    margin-bottom: 0;
 }
 
 .terminal {

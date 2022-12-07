@@ -42,7 +42,6 @@ document.addEventListener( 'DOMContentLoaded', ( event ) => {
   // .
   if ( tabs_exist ) {
     set_tab_height();
-    // set_element_height('.tabs-panel');
   }
 
   // .
@@ -69,7 +68,6 @@ $( window ).on('resize', function (e) {
 
   if ( tabs_exist() ) {
     set_tab_height();
-    // set_element_height('.tabs-panel');
   }
 
 });
@@ -89,12 +87,7 @@ const tabs_exist = () => {
 
 // .
 const set_tab_height = () => {
-  $('.tabs-panel').height( intViewportHeight - 280 );
-}
-
-// .
-const set_element_height = ( el ) => {
-  $( `'${el}'` ).height( intViewportHeight - 280 );
+  $('.tabs-panel').height( intViewportHeight - 250 );
 }
 
 // .
@@ -221,7 +214,6 @@ const load_template = async ( template_name ) => {
         // .
         if ( tabs_exist ) {
           set_tab_height();
-          // set_element_height('.tabs-panel');
         }
 
       loader_hide();
