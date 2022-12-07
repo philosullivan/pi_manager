@@ -67,3 +67,8 @@ hr {
     background-color: #263238;
     color: #ffffff;
 }
+
+.mnu {
+    text-align: left;
+    text-indent: 1.5em;
+}
