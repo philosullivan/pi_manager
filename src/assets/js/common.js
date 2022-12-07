@@ -104,8 +104,8 @@ const display_error = ( msg ) => {
 }
 
 // Shows the loading spinner.
-const loader_show = (element = 'content') => {
-$.LoadingOverlay('show', {
+const loader_show = () => {
+$('#content').LoadingOverlay('show', {
   image: "",
   background: 'rgba(255, 255, 255, 0.92)',
   fontawesome: 'fad fa-spinner fa-spin',
@@ -115,8 +115,8 @@ $.LoadingOverlay('show', {
 }
 
 // Hide the loading spinner.
-const loader_hide = (element = 'content') => {
-  $.LoadingOverlay('hide', true);
+const loader_hide = () => {
+  $('#content').LoadingOverlay('hide', true);
 }
 
 // Run shell commands in the main thread.
@@ -245,6 +245,15 @@ const get_system_info = () => {
       let boot_info   = '/boot/config.txt';
       let boot_data   = fs.readFileSync( boot_info, {encoding:'utf8', flag:'r'});
       $( '#boot-info' ).append( boot_data );
+
+      let ram       = run_shell( `free --mega` );
+      let ram_data = ram.stdout;
+      $( '#ram-info' ).append( ram_data );
+
+      let disk       = run_shell( `df -h` );
+      let disk_data  = disk.stdout;
+      $( '#disk-info' ).append( disk_data );
+
       loader_hide();
     }, 750 );
 }

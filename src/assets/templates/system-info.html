@@ -35,7 +35,8 @@
 			<li class="tabs-title is-active"><a href="#panel1" aria-selected="true">CPU Info</a></li>
 			<li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Pinout</a></li>
 			<li class="tabs-title"><a data-tabs-target="panel3" href="#panel3">Boot</a></li>
-			<li class="tabs-title hide"><a data-tabs-target="panel4" href="#panel4">Tab 4</a></li>
+			<li class="tabs-title"><a data-tabs-target="panel4" href="#panel4">RAM</a></li>
+			<li class="tabs-title"><a data-tabs-target="panel5" href="#panel5">Disk</a></li>
 		</ul>
 
 		<div class="tabs-content" data-tabs-content="example-tabs">
@@ -56,8 +57,14 @@
 
 			<!-- Tab 4 -->
 			<div class="tabs-panel" id="panel4">
-
+				<textarea id="ram-info" class="terminal" style="height:100%;"></textarea>
 			</div>
+
+			<!-- Tab 4 -->
+			<div class="tabs-panel" id="panel5">
+				<textarea id="disk-info" class="terminal" style="height:100%;"></textarea>
+			</div>
+
 		</div>
 	</div>
 </div>
