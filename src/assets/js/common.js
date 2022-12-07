@@ -6,7 +6,6 @@ const fs              = require( 'fs-extra' );
 const os              = require( 'os' );
 const ls              = require( 'local-storage' );
 const trim            = require( '@stdlib/string-trim' );
-const si              = require('systeminformation');
 
 // Get app info from main process.
 const app_info      = ipcRenderer.sendSync('app_info');
@@ -98,18 +97,24 @@ const display_error = ( msg ) => {
 
 // Shows the loading spinner.
 const loader_show = () => {
-$('#content').LoadingOverlay('show', {
-  image: "",
-  background: 'rgba(255, 255, 255, 0.92)',
-  fontawesome: 'fad fa-spinner fa-spin',
-  fontawesomeColor: '#BB2525',
-  zIndex: 1000
-});
+  $( 'body' ).css( 'cursor', 'wait' );
+  $('#content').LoadingOverlay('show', {
+    image: "",
+    background: 'rgba(255, 255, 255, 0.92)',
+    fontawesome: 'fad fa-spinner fa-spin',
+    fontawesomeColor: '#BB2525',
+    zIndex: 1000
+  });
+
 }
 
 // Hide the loading spinner.
 const loader_hide = () => {
-  $('#content').LoadingOverlay('hide', true);
+  $( '#content' ).LoadingOverlay( 'hide', true );
+
+  setTimeout(() => {
+    $( 'body' ).css( 'cursor', 'default' );
+  }, '750' );
 }
 
 // Run shell commands in the main thread.
